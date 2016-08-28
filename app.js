@@ -1,16 +1,14 @@
 
-var ImageInfo = {
-  pics: [],
-  display: [],
-  clicks: 0,
-};
+var ImageArray = [];
+
 function Images (name, link) {
   this.name = name;
   this.link = link;
-  ImageInfo.pics.push(this);
+  this.clicked = 0;
+  ImageArray.pics.push(this);
 }
-new Images('Bag','images/bag.jpg');
-new Images('Banana','images/banana.jpg');
+new Images('bag','images/bag.jpg');
+new Images('banana','images/banana.jpg');
 new Images('bathroom','images/bathroom.jpg');
 new Images('boots','images/boots.jpg');
 new Images('breakfast','images/breakfast.jpg');
@@ -29,3 +27,23 @@ new Images('unicorn','images/unicorn.jpg');
 new Images('usb','images/usb.jpg');
 new Images('water-can','images/water-can.jpg');
 new Images('wine-glass','images/wine-glass.jpg');
+
+// var centerImage = document.getElementById('center');
+// var rightImage = document.getElementById('right');
+// var leftImage = document.getElementById('left');
+
+function randomNum(){
+  return Math.floor(Math.random() * ImageArray.pics.length);
+};
+
+function displayImages(){
+  var one = randomNum();
+  var two = randomNum();
+  var three = randomNum();
+  while (one === two){
+    two = randomNum();
+  }
+  while (one === three || two === three) {
+    three = randomNum();
+  }
+};
