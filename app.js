@@ -1,30 +1,31 @@
-function Image(name, link) = {
-  this.name = name,
-  this.link = link,
-  ImageData.pics.push(this),
-}
-var ImageData = {
+
+var ImageInfo = {
   pics: [],
   display: [],
   clicks: 0,
+};
+function Images (name, link) {
+  this.name = name;
+  this.link = link;
+  ImageInfo.pics.push(this);
 }
-new Image('Bag','images/bag.jpg'),
-new Image('Banana','images/banana.jpg')
-new Image('bathroom','images/bathroom.jpg')
-new Image('boots','images/boots.jpg')
-new Image('breakfast','images/breakfast.jpg')
-new Image('bubblegum','images/bubblegum.jpg')
-new Image('chair','images/chair.jpg')
-new Image('cthulhu','images/cthulhu.jpg')
-new Image('dog-duck','images/dog-duck.jpg')
-new Image('dragon','images/dragon.jpg')
-new Image('pen','images/pen.jpg')
-new Image('pet-sweep','images/pet-sweep.jpg')
-new Image('scissors','images/scissors.jpg')
-new Image('shark','images/shark.jpg')
-new Image('sweep','images/sweep.jpg')
-new Image('tauntaun','images/tauntaun.jpg')
-new Image('unicorn','images/unicorn.jpg')
-new Image('usb','images/usb.jpg')
-new Image('water-can','images/water-can.jpg')
-new Image('wine-glass','images/wine-glass.jpg')
+new Images('Bag','images/bag.jpg');
+new Images('Banana','images/banana.jpg');
+new Images('bathroom','images/bathroom.jpg');
+new Images('boots','images/boots.jpg');
+new Images('breakfast','images/breakfast.jpg');
+new Images('bubblegum','images/bubblegum.jpg');
+new Images('chair','images/chair.jpg');
+new Images('cthulhu','images/cthulhu.jpg');
+new Images('dog-duck','images/dog-duck.jpg');
+new Images('dragon','images/dragon.jpg');
+new Images('pen','images/pen.jpg');
+new Images('pet-sweep','images/pet-sweep.jpg');
+new Images('scissors','images/scissors.jpg');
+new Images('shark','images/shark.jpg');
+new Images('sweep','images/sweep.jpg');
+new Images('tauntaun','images/tauntaun.jpg');
+new Images('unicorn','images/unicorn.jpg');
+new Images('usb','images/usb.jpg');
+new Images('water-can','images/water-can.jpg');
+new Images('wine-glass','images/wine-glass.jpg');
