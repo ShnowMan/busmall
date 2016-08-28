@@ -1,5 +1,6 @@
 
 var imageArray = [];
+var clicks = 0;
 
 function Images (name, link) {
   this.name = name;
@@ -28,6 +29,7 @@ new Images('usb','images/usb.jpg');
 new Images('water-can','images/water-can.jpg');
 new Images('wine-glass','images/wine-glass.jpg');
 
+// var imageSection = document.getElementById('clear');
 var centerImage = document.getElementById('imgElementTwo');
 var rightImage = document.getElementById('imgElementThree');
 var leftImage = document.getElementById('imgElementOne');
@@ -50,11 +52,26 @@ function randomImages(){
   leftImage.src = imageArray[imageOne].link;
   centerImage.src = imageArray[imageTwo].link;
   rightImage.src = imageArray[imageThree].link;
-
-  // centerImage.appendChild(imgElementOne);
-  // rightImage.appendChild(imgElementTwo);
-  // leftImage.appendChild(imgElementThree);
-  console.log('imageArray[imageOne].link = ',imageArray[imageOne].link);
+  leftImage.name = imageArray[imageOne].name;
+  centerImage.name = imageArray[imageTwo].name;
+  rightImage.name = imageArray[imageThree].name;
+  // console.log('imageArray[imageOne].link = ',imageArray[imageOne].link);
 }
+
+
+function clickCounter(event) {
+  clicks++;
+  console.log('number of clicks ',clicks);
+  for (var i = 0; i < imageArray.length; i++){
+    if (event.target.name === imageArray[i].name) {
+      imageArray[i].clicked++;
+    }
+  }
+  randomImages();
+};
+
+leftImage.addEventListener('click',clickCounter);
+centerImage.addEventListener('click',clickCounter);
+rightImage.addEventListener('click',clickCounter);
 
 randomImages();
