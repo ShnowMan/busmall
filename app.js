@@ -65,6 +65,7 @@ function clickCounter(event) {
   if (clicks < 15){
     clicks++;
     console.log('clicks = ',clicks);
+    console.log('Bag has been cliked this many times = ',imageArray[0].clicked);
     for (var i = 0; i < imageArray.length; i++){
       if (event.target.name === imageArray[i].name) {
         imageArray[i].clicked++;
@@ -74,6 +75,8 @@ function clickCounter(event) {
   } else{
     imageSection.innerHTML = '';
     instruction.textContent = 'Here are your results!';
+    buildTableHeader();
+    buildTableBody();
   }
 };
 
@@ -113,9 +116,10 @@ function buildTableBody() {
   var clicksThEl = document.createElement('th');
   clicksThEl.textContent = 'Number of Clicks';
   trEl.appendChild(clicksThEl);
-  for (var i = 1; i < imageArray.length + 1; i++){
+  for (var i = 0; i < imageArray.length; i++){
     var thEl = document.createElement('th');
-    thEl.textContent = 'test';
+    console.log(imageArray[i]);
+    thEl.textContent = imageArray[i].clicked;
     trEl.appendChild(thEl);
   }
   table.appendChild(trEl);
@@ -123,7 +127,4 @@ function buildTableBody() {
 
 
 
-
 randomImages();
-buildTableHeader();
-buildTableBody();
