@@ -37,6 +37,7 @@ var rightImage = document.getElementById('imgElementThree');
 var leftImage = document.getElementById('imgElementOne');
 var instruction = document.getElementById('instruction');
 var table = document.getElementById('hidden_table');
+var button = document.getElementById('hidden_button');
 
 function randomNum(){
   return Math.floor(Math.random() * imageArray.length);
@@ -64,8 +65,6 @@ function randomImages(){
 function clickCounter(event) {
   if (clicks < 15){
     clicks++;
-    console.log('clicks = ',clicks);
-    console.log('Bag has been cliked this many times = ',imageArray[0].clicked);
     for (var i = 0; i < imageArray.length; i++){
       if (event.target.name === imageArray[i].name) {
         imageArray[i].clicked++;
@@ -80,23 +79,10 @@ function clickCounter(event) {
   }
 };
 
+button.addEventListener('click', event);
 leftImage.addEventListener('click',clickCounter);
 centerImage.addEventListener('click',clickCounter);
 rightImage.addEventListener('click',clickCounter);
-
-
-//table
-// function buildTable() {
-//   var trEL = document.createElement('tr');
-//   var blankThEl = document.createElement('th');
-//   trEL.appendChild(blankThEl);
-//   for (var i = 0; i > imageArray.length; i++){
-//     var imageNames = document.createElement('th');
-//     imageNames.textContent = imageArray[i].name;
-//     trEL.appendChild(imageNames);
-//   };
-//   table.appendChild(trEL);
-// };
 
 function buildTableHeader() {
   var trElNames = document.createElement('tr');
@@ -118,13 +104,10 @@ function buildTableBody() {
   trEl.appendChild(clicksThEl);
   for (var i = 0; i < imageArray.length; i++){
     var thEl = document.createElement('th');
-    console.log(imageArray[i]);
     thEl.textContent = imageArray[i].clicked;
     trEl.appendChild(thEl);
   }
   table.appendChild(trEl);
 }
-
-
 
 randomImages();
