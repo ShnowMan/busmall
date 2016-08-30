@@ -15,9 +15,13 @@ footer {
 
 }
 
-img{
+img {
   margin: 0 10px;
   border: 1px lightgrey solid;
+}
+
+table, tr, th {
+  border-spacing: 10px;
 }
 
 .images{
