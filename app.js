@@ -31,83 +31,91 @@ new Images('usb','images/usb.jpg');
 new Images('water-can','images/water-can.jpg');
 new Images('wine-glass','images/wine-glass.jpg');
 
-var imageSection = document.getElementById('clear');
-var centerImage = document.getElementById('imgElementTwo');
-var rightImage = document.getElementById('imgElementThree');
-var leftImage = document.getElementById('imgElementOne');
-var instruction = document.getElementById('instruction');
-var table = document.getElementById('hidden_table');
-var button = document.getElementById('hidden_button');
+var tracker = {
+  imageSection: document.getElementById('clear'),
+  centerImage: document.getElementById('imgElementTwo'),
+  rightImage: document.getElementById('imgElementThree'),
+  leftImage: document.getElementById('imgElementOne'),
+  instruction: document.getElementById('instruction'),
+  table: document.getElementById('hidden_table'),
+  button: document.getElementById('hidden_button'),
 
-function randomNum(){
-  return Math.floor(Math.random() * imageArray.length);
-}
+  randomNum: function() {
+    return Math.floor(Math.random() * imageArray.length);
+  },
 
-function randomImages(){
-  var imageOne = randomNum();
-  var imageTwo = randomNum();
-  var imageThree = randomNum();
-  while (imageOne === imageTwo){
-    imageTwo = randomNum();
-  }
-  while (imageOne === imageThree || imageTwo === imageThree) {
-    imageThree = randomNum();
-  }
-
-  leftImage.src = imageArray[imageOne].link;
-  centerImage.src = imageArray[imageTwo].link;
-  rightImage.src = imageArray[imageThree].link;
-  leftImage.name = imageArray[imageOne].name;
-  centerImage.name = imageArray[imageTwo].name;
-  rightImage.name = imageArray[imageThree].name;
-}
-
-function clickCounter(event) {
-  if (clicks < 15){
-    clicks++;
-    for (var i = 0; i < imageArray.length; i++){
-      if (event.target.name === imageArray[i].name) {
-        imageArray[i].clicked++;
-      }
+  randomImages: function(){
+    var imageOne = this.randomNum();
+    var imageTwo = this.randomNum();
+    var imageThree = this.randomNum();
+    console.log('1',imageOne);
+    console.log('2',imageTwo);
+    console.log('3',imageThree);
+    while (imageOne === imageTwo){
+      imageTwo = this.randomNum();
     }
-    randomImages();
-  } else{
-    imageSection.innerHTML = '';
-    instruction.textContent = 'Here are your results!';
-    buildTableHeader();
-    buildTableBody();
+    while(imageOne === imageThree || imageTwo === imageThree) {
+      imageThree = this.randomNum();
+
+    }
+
+    this.leftImage.src = imageArray[imageOne].link;
+    this.centerImage.src = imageArray[imageTwo].link;
+    this.rightImage.src = imageArray[imageThree].link;
+    this.leftImage.name = imageArray[imageOne].name;
+    this.centerImage.name = imageArray[imageTwo].name;
+    this.rightImage.name = imageArray[imageThree].name;
+  },
+
+  clickCounter: function(event) {
+    // console.log(this);
+    if (clicks < 15){
+      clicks++;
+      for (var i = 0; i < imageArray.length; i++){
+        if (event.target.name === imageArray[i].name) {
+          imageArray[i].clicked++;
+        }
+      }
+      tracker.randomImages();
+    } else{
+      tracker.imageSection.innerHTML = '';
+      tracker.instruction.textContent = 'Here are your results!';
+      tracker.buildTableHeader();
+      tracker.buildTableBody();
+    }
+  },
+
+  buildTableHeader: function() {
+    var trElNames = document.createElement('tr');
+    var blankThEl = document.createElement('th');
+    trElNames.appendChild(blankThEl);
+
+    for (var i = 0; i < imageArray.length; i++) {
+      var hoursThEl = document.createElement('th');
+      hoursThEl.textContent = imageArray[i].name;
+      trElNames.appendChild(hoursThEl);
+    }
+    this.table.appendChild(trElNames);
+  },
+
+  buildTableBody: function() {
+    var trEl = document.createElement('tr');
+    var clicksThEl = document.createElement('th');
+    clicksThEl.textContent = 'Number of Clicks';
+    trEl.appendChild(clicksThEl);
+    for (var i = 0; i < imageArray.length; i++){
+      var thEl = document.createElement('th');
+      thEl.textContent = imageArray[i].clicked;
+      trEl.appendChild(thEl);
+    }
+    this.table.appendChild(trEl);
   }
 };
 
-button.addEventListener('click', event);
-leftImage.addEventListener('click',clickCounter);
-centerImage.addEventListener('click',clickCounter);
-rightImage.addEventListener('click',clickCounter);
+tracker.leftImage.addEventListener('click',tracker.clickCounter);
+tracker.centerImage.addEventListener('click',tracker.clickCounter);
+tracker.rightImage.addEventListener('click',tracker.clickCounter);
 
-function buildTableHeader() {
-  var trElNames = document.createElement('tr');
-  var blankThEl = document.createElement('th');
-  trElNames.appendChild(blankThEl);
 
-  for (var i = 0; i < imageArray.length; i++) {
-    var hoursThEl = document.createElement('th');
-    hoursThEl.textContent = imageArray[i].name;
-    trElNames.appendChild(hoursThEl);
-  }
-  table.appendChild(trElNames);
-};
 
-function buildTableBody() {
-  var trEl = document.createElement('tr');
-  var clicksThEl = document.createElement('th');
-  clicksThEl.textContent = 'Number of Clicks';
-  trEl.appendChild(clicksThEl);
-  for (var i = 0; i < imageArray.length; i++){
-    var thEl = document.createElement('th');
-    thEl.textContent = imageArray[i].clicked;
-    trEl.appendChild(thEl);
-  }
-  table.appendChild(trEl);
-}
-
-randomImages();
+tracker.randomImages();
