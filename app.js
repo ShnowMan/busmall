@@ -48,9 +48,7 @@ var tracker = {
     var imageOne = this.randomNum();
     var imageTwo = this.randomNum();
     var imageThree = this.randomNum();
-    console.log('1',imageOne);
-    console.log('2',imageTwo);
-    console.log('3',imageThree);
+
     while (imageOne === imageTwo){
       imageTwo = this.randomNum();
     }
@@ -68,7 +66,7 @@ var tracker = {
   },
 
   clickCounter: function(event) {
-    // console.log(this);
+
     if (clicks < 15){
       clicks++;
       for (var i = 0; i < imageArray.length; i++){
