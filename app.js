@@ -1,6 +1,9 @@
 
 var imageArray = [];
 var clicks = 0;
+var imageNames = [];
+var imageClicked = [];
+
 
 function Images (name, link) {
   this.name = name;
@@ -8,6 +11,8 @@ function Images (name, link) {
   this.shown = 0;
   this.clicked = 0;
   imageArray.push(this);
+  imageNames.push(this.name);
+  imageClicked.push(this.clicked);
 }
 
 new Images('bag','images/bag.jpg');
@@ -30,6 +35,9 @@ new Images('unicorn','images/unicorn.jpg');
 new Images('usb','images/usb.jpg');
 new Images('water-can','images/water-can.jpg');
 new Images('wine-glass','images/wine-glass.jpg');
+
+
+
 
 var tracker = {
   imageSection: document.getElementById('clear'),
@@ -69,11 +77,16 @@ var tracker = {
 
     if (clicks < 15){
       clicks++;
+
       for (var i = 0; i < imageArray.length; i++){
         if (event.target.name === imageArray[i].name) {
           imageArray[i].clicked++;
+          imageClicked[i]++;
+          console.log('Bag Clicked in imageClicked array = ',imageClicked[0]);
         }
       }
+      console.log('Bag Clicked in imageArray = ',imageArray[0].clicked);
+      myChart.update();
       tracker.randomImages();
     } else{
       tracker.imageSection.innerHTML = '';
@@ -99,7 +112,7 @@ var tracker = {
   buildTableBody: function() {
     var trEl = document.createElement('tr');
     var clicksThEl = document.createElement('th');
-    clicksThEl.textContent = 'Number of Clicks';
+    clicksThEl.textContent = '# of Clicks';
     trEl.appendChild(clicksThEl);
     for (var i = 0; i < imageArray.length; i++){
       var thEl = document.createElement('th');
@@ -114,6 +127,64 @@ tracker.leftImage.addEventListener('click',tracker.clickCounter);
 tracker.centerImage.addEventListener('click',tracker.clickCounter);
 tracker.rightImage.addEventListener('click',tracker.clickCounter);
 
-
-
 tracker.randomImages();
+
+// 12, 19, 3, 5, 5, 3, 10, 15, 6, 8, 9, 4, 6, 10, 11, 15, 5, 4, 5, 7
+
+var ctx = document.getElementById('canvas').getContext('2d');
+var myChart = new Chart(ctx, {
+  type: 'bar',
+  data: {
+    labels: imageNames,
+    datasets: [{
+      label: '# of Clicks',
+      data: imageClicked,
+      backgroundColor: [
+        'rgba(200, 0, 0, 0.1)',
+        'rgba(0, 200, 0, 0.1)',
+        'rgba(0, 0, 200, 0.1)',
+        'rgba(200, 0, 0, 0.1)',
+        'rgba(0, 200, 0, 0.1)',
+        'rgba(0, 0, 200, 0.1)',
+        'rgba(200, 0, 0, 0.1)',
+        'rgba(0, 200, 0, 0.1)',
+        'rgba(0, 0, 200, 0.1)',
+        'rgba(200, 0, 0, 0.1)',
+        'rgba(0, 200, 0, 0.1)',
+        'rgba(0, 0, 200, 0.1)',
+        'rgba(200, 0, 0, 0.1)',
+        'rgba(0, 200, 0, 0.1)',
+        'rgba(0, 0, 200, 0.1)',
+        'rgba(200, 0, 0, 0.1)',
+        'rgba(0, 200, 0, 0.1)',
+        'rgba(0, 0, 200, 0.1)',
+        'rgba(200, 0, 0, 0.1)',
+        'rgba(0, 200, 0, 0.1)'
+      ],
+      borderColor: [
+        'rgba(200,0,0,1)',
+        'rgba(0,200,0,1)',
+        'rgba(0,0,200,1)',
+        'rgba(200,0,0,1)',
+        'rgba(0,200,0,1)',
+        'rgba(0,0,200,1)',
+        'rgba(200,0,0,1)',
+        'rgba(0,200,0,1)',
+        'rgba(0,0,200,1)',
+        'rgba(200,0,0,1)',
+        'rgba(0,200,0,1)',
+        'rgba(0,0,200,1)',
+        'rgba(200,0,0,1)',
+        'rgba(0,200,0,1)',
+        'rgba(0,0,200,1)',
+        'rgba(200,0,0,1)',
+        'rgba(0,200,0,1)',
+        'rgba(0,0,200,1)',
+        'rgba(200,0,0,1)',
+        'rgba(0,200,0,1)',
+      ],
+      borderWidth: 1
+    }]
+  },
+});
+console.log(myChart);
