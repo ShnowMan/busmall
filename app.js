@@ -3,7 +3,6 @@ var imageArray = [];
 var clicks;
 var imageNames = [];
 var imageClicked = [];
-console.log('clicks = ',clicks);
 
 function Images (name, link) {
   this.name = name;
@@ -38,9 +37,11 @@ new Images('wine-glass','images/wine-glass.jpg');
 
 if (localStorage.lsImageArray){
   var updateImages = JSON.parse(localStorage.getItem('lsImageArray'));
+  console.log('lsImageArray = ',updateImages);
   for (var i in imageClicked) {
-    imageClicked[i].clicked = updateImages[i].clicked;
+    imageClicked[i].clicked += updateImages[i].clicked;
   };
+  console.log('bag clicked in if statement',imageClicked[0].clicked);
 };
 
 if (localStorage.userClicks){
@@ -49,7 +50,7 @@ if (localStorage.userClicks){
 }else{
   clicks = 0;
 };
-
+console.log('Bag Clicked = ',imageClicked[0]);
 
 var tracker = {
   imageSection: document.getElementById('clear'),
@@ -61,7 +62,7 @@ var tracker = {
   button: document.getElementById('button'),
 
   setLocalStorage: function(){
-    localStorage.setItem('lsImageArray',JSON.stringify(imageArray));
+    localStorage.setItem('lsImageArray',JSON.stringify(imageClicked));
     localStorage.setItem('userClicks',JSON.stringify(clicks));
   },
 
@@ -211,4 +212,3 @@ var myChart = new Chart(ctx, {
     }]
   },
 });
-console.log(myChart);
