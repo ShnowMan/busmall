@@ -1,9 +1,9 @@
 
 var imageArray = [];
-var clicks = 0;
+var clicks;
 var imageNames = [];
 var imageClicked = [];
-
+console.log('clicks = ',clicks);
 
 function Images (name, link) {
   this.name = name;
@@ -36,7 +36,19 @@ new Images('usb','images/usb.jpg');
 new Images('water-can','images/water-can.jpg');
 new Images('wine-glass','images/wine-glass.jpg');
 
+if (localStorage.lsImageArray){
+  var updateImages = JSON.parse(localStorage.getItem('lsImageArray'));
+  for (var i in imageClicked) {
+    imageClicked[i].clicked = updateImages[i].clicked;
+  };
+};
 
+if (localStorage.userClicks){
+  var updateClicks = JSON.parse(localStorage.getItem('userClicks'));
+  clicks = updateClicks;
+}else{
+  clicks = 0;
+};
 
 
 var tracker = {
@@ -46,7 +58,12 @@ var tracker = {
   leftImage: document.getElementById('imgElementOne'),
   instruction: document.getElementById('instruction'),
   table: document.getElementById('hidden_table'),
-  button: document.getElementById('hidden_button'),
+  button: document.getElementById('button'),
+
+  setLocalStorage: function(){
+    localStorage.setItem('lsImageArray',JSON.stringify(imageArray));
+    localStorage.setItem('userClicks',JSON.stringify(clicks));
+  },
 
   randomNum: function() {
     return Math.floor(Math.random() * imageArray.length);
@@ -82,12 +99,12 @@ var tracker = {
         if (event.target.name === imageArray[i].name) {
           imageArray[i].clicked++;
           imageClicked[i]++;
-          console.log('Bag Clicked in imageClicked array = ',imageClicked[0]);
         }
       }
-      console.log('Bag Clicked in imageArray = ',imageArray[0].clicked);
+      tracker.setLocalStorage();
       myChart.update();
       tracker.randomImages();
+
     } else{
       tracker.imageSection.innerHTML = '';
       tracker.instruction.textContent = 'Here are your results!';
@@ -120,14 +137,21 @@ var tracker = {
       trEl.appendChild(thEl);
     }
     this.table.appendChild(trEl);
+  },
+
+  reset: function() {
+    localStorage.clear();
+    location.reload();
   }
+
 };
 
 tracker.leftImage.addEventListener('click',tracker.clickCounter);
 tracker.centerImage.addEventListener('click',tracker.clickCounter);
 tracker.rightImage.addEventListener('click',tracker.clickCounter);
-
+tracker.button.addEventListener('click',tracker.reset);
 tracker.randomImages();
+
 
 // 12, 19, 3, 5, 5, 3, 10, 15, 6, 8, 9, 4, 6, 10, 11, 15, 5, 4, 5, 7
 
