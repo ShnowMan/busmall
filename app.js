@@ -39,14 +39,14 @@ var createImages = function() {
 };
 
 
-if (localStorage.lsImageArray){
-  var updateImages = JSON.parse(localStorage.getItem('lsImageArray'));
-  for (var i in imageArray) {
-    updateImages = new Image(updateImages[i].name,updateImages[i].link);
-  }
-}else{
-  createImages();
-};
+// if (localStorage.lsImageArray){
+//   var updateImages = JSON.parse(localStorage.getItem('lsImageArray'));
+//   for (var i in imageArray) {
+//     new Image(updateImages[i].name,updateImages[i].link);
+//   }
+// }else{
+//   createImages();
+// };
 
 if (localStorage.userClicks){
   var updateClicks = JSON.parse(localStorage.getItem('userClicks'));
@@ -150,7 +150,7 @@ var tracker = {
   }
 
 };
-// createImages();
+createImages();
 tracker.leftImage.addEventListener('click',tracker.clickCounter);
 tracker.centerImage.addEventListener('click',tracker.clickCounter);
 tracker.rightImage.addEventListener('click',tracker.clickCounter);
