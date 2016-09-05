@@ -1,9 +1,9 @@
 
-var imageArray = [];
-var clicks = 0;
+var clicks;
 var imageNames = [];
 var imageClicked = [];
 
+var imageArray = [];
 
 function Images (name, link) {
   this.name = name;
@@ -12,31 +12,48 @@ function Images (name, link) {
   this.clicked = 0;
   imageArray.push(this);
   imageNames.push(this.name);
-  imageClicked.push(this.clicked);
+  // myChart.data.datasets[0].data.push(this.clicked);
 }
 
-new Images('bag','images/bag.jpg');
-new Images('banana','images/banana.jpg');
-new Images('bathroom','images/bathroom.jpg');
-new Images('boots','images/boots.jpg');
-new Images('breakfast','images/breakfast.jpg');
-new Images('bubblegum','images/bubblegum.jpg');
-new Images('chair','images/chair.jpg');
-new Images('cthulhu','images/cthulhu.jpg');
-new Images('dog-duck','images/dog-duck.jpg');
-new Images('dragon','images/dragon.jpg');
-new Images('pen','images/pen.jpg');
-new Images('pet-sweep','images/pet-sweep.jpg');
-new Images('scissors','images/scissors.jpg');
-new Images('shark','images/shark.jpg');
-new Images('sweep','images/sweep.png');
-new Images('tauntaun','images/tauntaun.jpg');
-new Images('unicorn','images/unicorn.jpg');
-new Images('usb','images/usb.jpg');
-new Images('water-can','images/water-can.jpg');
-new Images('wine-glass','images/wine-glass.jpg');
+var createImages = function() {
+  new Images('bag','images/bag.jpg');
+  new Images('banana','images/banana.jpg');
+  new Images('bathroom','images/bathroom.jpg');
+  new Images('boots','images/boots.jpg');
+  new Images('breakfast','images/breakfast.jpg');
+  new Images('bubblegum','images/bubblegum.jpg');
+  new Images('chair','images/chair.jpg');
+  new Images('cthulhu','images/cthulhu.jpg');
+  new Images('dog-duck','images/dog-duck.jpg');
+  new Images('dragon','images/dragon.jpg');
+  new Images('pen','images/pen.jpg');
+  new Images('pet-sweep','images/pet-sweep.jpg');
+  new Images('scissors','images/scissors.jpg');
+  new Images('shark','images/shark.jpg');
+  new Images('sweep','images/sweep.png');
+  new Images('tauntaun','images/tauntaun.jpg');
+  new Images('unicorn','images/unicorn.jpg');
+  new Images('usb','images/usb.jpg');
+  new Images('water-can','images/water-can.jpg');
+  new Images('wine-glass','images/wine-glass.jpg');
+};
 
 
+// if (localStorage.lsImageArray){
+//   var updateImages = JSON.parse(localStorage.getItem('lsImageArray'));
+//   for (var i in imageArray) {
+//     new Image(updateImages[i].name,updateImages[i].link);
+//   }
+// }else{
+//   createImages();
+// };
+
+if (localStorage.userClicks){
+  var updateClicks = JSON.parse(localStorage.getItem('userClicks'));
+  clicks = updateClicks;
+}else{
+  clicks = 0;
+};
 
 
 var tracker = {
@@ -46,7 +63,12 @@ var tracker = {
   leftImage: document.getElementById('imgElementOne'),
   instruction: document.getElementById('instruction'),
   table: document.getElementById('hidden_table'),
-  button: document.getElementById('hidden_button'),
+  button: document.getElementById('button'),
+
+  setLocalStorage: function(){
+    localStorage.setItem('lsImageArray',JSON.stringify(imageArray));
+    localStorage.setItem('userClicks',JSON.stringify(clicks));
+  },
 
   randomNum: function() {
     return Math.floor(Math.random() * imageArray.length);
@@ -82,12 +104,12 @@ var tracker = {
         if (event.target.name === imageArray[i].name) {
           imageArray[i].clicked++;
           imageClicked[i]++;
-          console.log('Bag Clicked in imageClicked array = ',imageClicked[0]);
         }
       }
-      console.log('Bag Clicked in imageArray = ',imageArray[0].clicked);
+      tracker.setLocalStorage();
       myChart.update();
       tracker.randomImages();
+
     } else{
       tracker.imageSection.innerHTML = '';
       tracker.instruction.textContent = 'Here are your results!';
@@ -120,14 +142,21 @@ var tracker = {
       trEl.appendChild(thEl);
     }
     this.table.appendChild(trEl);
-  }
-};
+  },
 
+  reset: function() {
+    localStorage.clear();
+    location.reload();
+  }
+
+};
+createImages();
 tracker.leftImage.addEventListener('click',tracker.clickCounter);
 tracker.centerImage.addEventListener('click',tracker.clickCounter);
 tracker.rightImage.addEventListener('click',tracker.clickCounter);
-
+tracker.button.addEventListener('click',tracker.reset);
 tracker.randomImages();
+
 
 // 12, 19, 3, 5, 5, 3, 10, 15, 6, 8, 9, 4, 6, 10, 11, 15, 5, 4, 5, 7
 
@@ -138,7 +167,7 @@ var myChart = new Chart(ctx, {
     labels: imageNames,
     datasets: [{
       label: '# of Clicks',
-      data: imageClicked,
+      data: [0],
       backgroundColor: [
         'rgba(200, 0, 0, 0.1)',
         'rgba(0, 200, 0, 0.1)',
