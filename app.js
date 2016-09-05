@@ -1,8 +1,9 @@
 
-var imageArray = [];
 var clicks;
 var imageNames = [];
 var imageClicked = [];
+
+var imageArray = [];
 
 function Images (name, link) {
   this.name = name;
@@ -11,7 +12,7 @@ function Images (name, link) {
   this.clicked = 0;
   imageArray.push(this);
   imageNames.push(this.name);
-  imageClicked.push(this.clicked);
+  myChart.data.datasets[0].data.push(this.clicked);
 }
 
 new Images('bag','images/bag.jpg');
@@ -35,14 +36,15 @@ new Images('usb','images/usb.jpg');
 new Images('water-can','images/water-can.jpg');
 new Images('wine-glass','images/wine-glass.jpg');
 
-if (localStorage.lsImageArray){
-  var updateImages = JSON.parse(localStorage.getItem('lsImageArray'));
-  console.log('lsImageArray = ',updateImages);
-  for (var i in imageClicked) {
-    imageClicked[i].clicked += updateImages[i].clicked;
-  };
-  console.log('bag clicked in if statement',imageClicked[0].clicked);
-};
+// if (localStorage.lsImageArray){
+//   var updateImages = JSON.parse(localStorage.getItem('lsImageArray'));
+//   for (var i in imageArray) {
+//     imageClicked.clear;
+//     imageClicked.push(updateImages[i]);
+//   }
+// }else{
+//   imageClicked.push(imageArray.clicked);
+// };
 
 if (localStorage.userClicks){
   var updateClicks = JSON.parse(localStorage.getItem('userClicks'));
@@ -50,7 +52,7 @@ if (localStorage.userClicks){
 }else{
   clicks = 0;
 };
-console.log('Bag Clicked = ',imageClicked[0]);
+
 
 var tracker = {
   imageSection: document.getElementById('clear'),
@@ -62,7 +64,7 @@ var tracker = {
   button: document.getElementById('button'),
 
   setLocalStorage: function(){
-    localStorage.setItem('lsImageArray',JSON.stringify(imageClicked));
+    localStorage.setItem('lsImageArray',JSON.stringify(imageArray));
     localStorage.setItem('userClicks',JSON.stringify(clicks));
   },
 
@@ -163,7 +165,7 @@ var myChart = new Chart(ctx, {
     labels: imageNames,
     datasets: [{
       label: '# of Clicks',
-      data: imageClicked,
+      data: [0],
       backgroundColor: [
         'rgba(200, 0, 0, 0.1)',
         'rgba(0, 200, 0, 0.1)',
@@ -212,3 +214,4 @@ var myChart = new Chart(ctx, {
     }]
   },
 });
+console.log(myChart);
