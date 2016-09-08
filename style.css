@@ -18,6 +18,8 @@ footer {
 img {
   margin: 0 10px;
   border: 1px lightgrey solid;
+  height: 384px
+
 }
 
 table, tr, th {
@@ -27,6 +29,7 @@ table, tr, th {
 .images{
   display: flex;
   flex-direction: row;
+
 }
 
 #chart{
